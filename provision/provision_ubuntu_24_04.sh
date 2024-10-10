@@ -154,7 +154,7 @@ status "Composer Version: $(composer -V)"
 status "Node Version: $(node -v)"
 status "NPM Version: $(npm -v)"
 status "Redis Version: $(redis-cli -v)"
-status "PostgreSQL Version: $(postgres -V)"
+status "PostgreSQL Version: $(psql -V)"
 status "Swap Space: $(swapon --show)"
 
 cd $initial_working_directory
