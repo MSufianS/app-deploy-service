@@ -1,0 +1,19 @@
+servers: '8.0.1.256,8.0.2.256'
+installs:
+  swapspace: yes
+  nginx: yes
+  php:
+    install: yes
+    composer: yes
+    version: 8.3
+  node_and_npm: yes
+  redis: yes
+  database:
+    postgres: yes
+    root_password: terlalusecret
+  certbot: yes
+  memcache: no
+  beanstalk: no
+
+
+
