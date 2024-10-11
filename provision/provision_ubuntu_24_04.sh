@@ -95,6 +95,15 @@ case $installs_database_postgres in
   status "not installing postgres";;
 esac
 
+title "Install MySQL"
+case $installs_database_mysql in
+  [yY][eE][sS]|[yY])
+  source ./installers/mysql.sh
+  status "mysql installed";;
+  *)
+  status "not installing mysql";;
+esac
+
 title "Install memcache"
 case $installs_memcache in
   [yY][eE][sS]|[yY])
@@ -155,6 +164,7 @@ status "Node Version: $(node -v)"
 status "NPM Version: $(npm -v)"
 status "Redis Version: $(redis-cli -v)"
 status "PostgreSQL Version: $(psql -V)"
+status "MySQL Version: $(mysql -V)"
 status "Swap Space: $(swapon --show)"
 
 cd $initial_working_directory

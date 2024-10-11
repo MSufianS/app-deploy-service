@@ -10,6 +10,7 @@ installs:
   redis: yes
   database:
     postgres: yes
+    mysql: no
     root_password: terlalusecret
   certbot: yes
   memcache: no
