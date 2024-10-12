@@ -16,6 +16,8 @@ php8.3-zip php8.3-memcached php8.3-redis php8.3-imagick
 
 sudo update-alternatives --set php /usr/bin/php8.3
 
+php8.3 -i | grep imagick
+
 if [ ! -f /etc/php/8.3/cli/php.ini.bak ]; then
   sudo cp /etc/php/8.3/cli/php.ini /etc/php/8.3/cli/php.ini.bak
 fi
