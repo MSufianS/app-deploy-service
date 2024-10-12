@@ -9,7 +9,7 @@
         "InstanceTenancy": "default",
         "Tags": [
           {
-            "Value": "solusmy_vpc",
+            "Value": "solusmy-vpc",
             "Key": "Name"
           }
         ]
@@ -20,7 +20,7 @@
       "Properties": {
         "Tags": [
           {
-            "Value": "solusmy_igw",
+            "Value": "solusmy-igw",
             "Key": "Name"
           }
         ]
@@ -48,7 +48,7 @@
         "MapPublicIpOnLaunch": true,
         "Tags": [
           {
-            "Value": "solusmy_public_subnet_1",
+            "Value": "solusmy-subnet-public1-ap-southeast-5a",
             "Key": "Name"
           }
         ]
@@ -65,7 +65,7 @@
         "MapPublicIpOnLaunch": false,
         "Tags": [
           {
-            "Value": "solusmy_private_subnet_1",
+            "Value": "solusmy-subnet-private1-ap-southeast-5a",
             "Key": "Name"
           }
         ]
@@ -82,7 +82,7 @@
         "MapPublicIpOnLaunch": true,
         "Tags": [
           {
-            "Value": "solusmy_public_subnet_2",
+            "Value": "solusmy-subnet-public2-ap-southeast-5b",
             "Key": "Name"
           }
         ]
@@ -99,7 +99,7 @@
         "MapPublicIpOnLaunch": false,
         "Tags": [
           {
-            "Value": "solusmy_private_subnet_2",
+            "Value": "solusmy-subnet-private2-ap-southeast-5b",
             "Key": "Name"
           }
         ]
@@ -113,7 +113,7 @@
         },
         "Tags": [
           {
-            "Value": "solusmy_rtb_public",
+            "Value": "solusmy-rtb-public",
             "Key": "Name"
           }
         ]
@@ -230,7 +230,7 @@
         ],
         "Tags": [
           {
-            "Value": "solusmy_sg",
+            "Value": "solusmy-sg",
             "Key": "Name"
           }
         ]
@@ -252,7 +252,7 @@
         ],
         "Tags": [
           {
-            "Value": "solusmy_ec2_instance",
+            "Value": "solusmy-ec2-instance",
             "Key": "Name"
           }
         ],

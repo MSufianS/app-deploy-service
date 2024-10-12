@@ -2,6 +2,7 @@
 
 username=UNAME
 password=PWORD
+db_database=DB_DBASE
 db_password=DB_PWORD
 
 app_type=APP_TYPE

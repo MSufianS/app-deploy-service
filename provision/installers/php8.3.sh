@@ -14,6 +14,8 @@ php8.3-mbstring php8.3-mysql php8.3-odbc php8.3-opcache php8.3-pgsql php8.3-phpd
 php8.3-snmp php8.3-soap php8.3-sqlite3 php8.3-sybase php8.3-tidy php8.3-xdebug php8.3-xml php8.3-xmlrpc php8.3-xsl \
 php8.3-zip php8.3-memcached php8.3-redis
 
+sudo update-alternatives --set php /usr/bin/php8.3
+
 if [ ! -f /etc/php/8.3/cli/php.ini.bak ]; then
   sudo cp /etc/php/8.3/cli/php.ini /etc/php/8.3/cli/php.ini.bak
 fi
