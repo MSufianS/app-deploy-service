@@ -25,12 +25,16 @@ if [[ "$password" != "$confirm_password" ]]; then
 fi
 
 read -p "Database name (e.g., ale_db): " db_database
-read -p "Database password (e.g., hardPassword): " db_username
+read -p "Database username: " db_username
 read -p "Database password (e.g., hardPassword): " db_password
 
 read -p "Application port number (e.g., 8000): " application_port
 
 read -p "Git repo url: " git_repo_url
+
+read -p "Laravel Reverb (y or n): " has_reverb
+read -p "Laravel Horizon (y or n): " has_horizon
+read -p "Laravel Pulse (y or n): " has_pulse
 
 app_type="laravel"
 
@@ -52,6 +56,9 @@ sudo sed -i "s|app_type=APP_TYPE|app_type=$app_type|" $my_path/../apps/$username
 sudo sed -i "s|app_port=PORT|app_port=$application_port|" $my_path/../apps/$username.sh
 sudo sed -i "s|repo=REPO_URL|repo=$git_repo_url|" $my_path/../apps/$username.sh
 sudo sed -i "s|public_ssh_key=PUB_SSH_KEY|public_ssh_key=\"$public_ssh_key\"|" $my_path/../apps/$username.sh
+sudo sed -i "s|has_reverb=HAS_REVERB|has_reverb=$has_reverb|" $my_path/../apps/$username.sh
+sudo sed -i "s|has_horizon=HAS_HORIZON|has_horizon=$has_horizon|" $my_path/../apps/$username.sh
+sudo sed -i "s|has_pulse=HAS_PULSE|has_pulse=$has_pulse|" $my_path/../apps/$username.sh
 
 title "Status"
 if [ -f $my_path/../apps/$username.sh ]; then

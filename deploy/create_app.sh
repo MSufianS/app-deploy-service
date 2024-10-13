@@ -129,7 +129,11 @@ fi
 # Create nginx conf
 title "Creating Nginx Conf"
 if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
+  if [ "$has_reverb" == "y" ]; then
+    sudo cp $root_path/deploy/_nginx_reverb.conf /etc/nginx/sites-available/$username.conf
+  else
     sudo cp $root_path/deploy/_nginx.conf /etc/nginx/sites-available/$username.conf
+  fi
     sudo sed -i "s|listen PORT;|listen $app_port;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|listen \[::\]:PORT;|listen [::]:$app_port;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
@@ -169,32 +173,59 @@ else
 fi
 
 # Horizon service setup
-if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
-    sudo cp $root_path/deploy/_supervisor.conf /etc/supervisor/conf.d/$username.conf
-    sudo sed -i "s|program:|program:horizon_$username|" /etc/supervisor/conf.d/$username.conf
-    sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/$username.conf
-    sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username.conf
-    sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/horizon.log|" /etc/supervisor/conf.d/$username.conf
-    sudo supervisorctl reread
-    sudo supervisorctl update
-    status "Created: /etc/supervisor/conf.d/$username.conf"
+if [ "$has_horizon" == "y" ]; then
+  if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
+      sudo cp $root_path/deploy/_supervisor.conf /etc/supervisor/conf.d/$username.conf
+      sudo sed -i "s|program:|program:horizon_$username|" /etc/supervisor/conf.d/$username.conf
+      sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/$username.conf
+      sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username.conf
+      sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/horizon.log|" /etc/supervisor/conf.d/$username.conf
+      sudo supervisorctl reread
+      sudo supervisorctl update
+      status "Created: /etc/supervisor/conf.d/$username.conf"
+  else
+      status "Already exists: /etc/supervisor/conf.d/$username.conf"
+  fi
 else
-    status "Already exists: /etc/supervisor/conf.d/$username.conf"
+    status "Horizon is disabled in config.yml. Skipping Supervisor conf for Horizon."
 fi
 
 # Pulse service setup
-pulse_conf_file="/etc/supervisor/conf.d/${username}_pulse.conf"
-if [ ! -f "$pulse_conf_file" ]; then
-    sudo cp $root_path/deploy/_supervisor.conf "$pulse_conf_file"
-    sudo sed -i "s|program:|program:pulse_$username|" "$pulse_conf_file"
-    sudo sed -i "s|command=|command=php $deploy_directory/current/artisan pulse:check|" "$pulse_conf_file"
-    sudo sed -i "s|user=|user=$username|" "$pulse_conf_file"
-    sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/pulse.log|" "$pulse_conf_file"
-    sudo supervisorctl reread
-    sudo supervisorctl update
-    status "Created: $pulse_conf_file"
+if [ "$has_pulse" == "y" ]; then
+  pulse_conf_file="/etc/supervisor/conf.d/${username}_pulse.conf"
+  if [ ! -f "$pulse_conf_file" ]; then
+      sudo cp $root_path/deploy/_supervisor.conf "$pulse_conf_file"
+      sudo sed -i "s|program:|program:pulse_$username|" "$pulse_conf_file"
+      sudo sed -i "s|command=|command=php $deploy_directory/current/artisan pulse:check|" "$pulse_conf_file"
+      sudo sed -i "s|user=|user=$username|" "$pulse_conf_file"
+      sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/pulse.log|" "$pulse_conf_file"
+      sudo supervisorctl reread
+      sudo supervisorctl update
+      status "Created: $pulse_conf_file"
+  else
+      status "Already exists: $pulse_conf_file"
+  fi
 else
-    status "Already exists: $pulse_conf_file"
+    status "Pulse is disabled in config.yml. Skipping Supervisor conf for Pulse."
+fi
+
+# Reverb service setup
+if [ "$has_reverb" == "y" ]; then
+  reverb_conf_file="/etc/supervisor/conf.d/${username}_reverb.conf"
+  if [ ! -f "$reverb_conf_file" ]; then
+      sudo cp $root_path/deploy/_supervisor.conf "$reverb_conf_file"
+      sudo sed -i "s|program:|program:reverb_$username|" "$pulse_conf_file"
+      sudo sed -i "s|command=|command=php $deploy_directory/current/artisan reverb:start|" "$reverb_conf_file"
+      sudo sed -i "s|user=|user=$username|" "$reverb_conf_file"
+      sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/reverb.log|" "$reverb_conf_file"
+      sudo supervisorctl reread
+      sudo supervisorctl update
+      status "Created: $reverb_conf_file"
+  else
+      status "Already exists: $reverb_conf_file"
+  fi
+else
+    status "Reverb is disabled in config.yml. Skipping Supervisor conf for Reverb."
 fi
 
 cd $initial_working_directory || exit
