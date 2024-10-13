@@ -195,7 +195,7 @@ if [ "$has_pulse" == "y" ]; then
   pulse_conf_file="/etc/supervisor/conf.d/${username}_pulse.conf"
   if [ ! -f "$pulse_conf_file" ]; then
       sudo cp $root_path/deploy/_supervisor.conf "$pulse_conf_file"
-      sudo sed -i "s|program:|program:pulse_${username}|" "$pulse_conf_file"
+      sudo sed -i "s|program:|program:pulse_$username|" "$pulse_conf_file"
       sudo sed -i "s|command=|command=php $deploy_directory/current/artisan pulse:check|" "$pulse_conf_file"
       sudo sed -i "s|user=|user=$username|" "$pulse_conf_file"
       sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/pulse.log|" "$pulse_conf_file"
@@ -214,7 +214,7 @@ if [ "$has_reverb" == "y" ]; then
   reverb_conf_file="/etc/supervisor/conf.d/${username}_reverb.conf"
   if [ ! -f "$reverb_conf_file" ]; then
       sudo cp $root_path/deploy/_supervisor.conf "$reverb_conf_file"
-      sudo sed -i "s|program:|program:reverb_$username|" "$pulse_conf_file"
+      sudo sed -i "s|program:|program:reverb_$username|" "$reverb_conf_file"
       sudo sed -i "s|command=|command=php $deploy_directory/current/artisan reverb:start|" "$reverb_conf_file"
       sudo sed -i "s|user=|user=$username|" "$reverb_conf_file"
       sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/reverb.log|" "$reverb_conf_file"
