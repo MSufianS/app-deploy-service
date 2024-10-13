@@ -98,7 +98,7 @@ then
   title "Dropping $app_name user and $app_name database from MySQL"
   mysql -u root -p$db_password <<SQL
 DROP DATABASE IF EXISTS $app_name;
-DROP USER IF EXISTS '$username'@'localhost';
+DROP USER IF EXISTS '$db_username'@'localhost';
 FLUSH PRIVILEGES;
 SQL
   status "Dropped $app_name user and $app_name database from MySQL"

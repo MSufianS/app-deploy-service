@@ -25,7 +25,7 @@ if [[ "$password" != "$confirm_password" ]]; then
 fi
 
 read -p "Database name (e.g., ale_db): " db_database
-
+read -p "Database password (e.g., hardPassword): " db_username
 read -p "Database password (e.g., hardPassword): " db_password
 
 read -p "Application port number (e.g., 8000): " application_port
