@@ -11,7 +11,8 @@ installs:
   database:
     postgres: yes
     mysql: no
-    root_password: terlalusecret
+    db_username: postgres
+    db_password: secret
   certbot: yes
   memcache: no
   beanstalk: no

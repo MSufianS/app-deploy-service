@@ -55,7 +55,7 @@ fi
 if [ ! -f $deploy_directory/symlinks/.env ]; then
   cp $my_path/_laravel.env $deploy_directory/symlinks/.env
   sed -i "s|DB_DATABASE=.*|DB_DATABASE=$db_database|" $deploy_directory/symlinks/.env
-  sed -i "s|DB_USERNAME=.*|DB_USERNAME=$username|" $deploy_directory/symlinks/.env
+  sed -i "s|DB_USERNAME=.*|DB_USERNAME=$db_username|" $deploy_directory/symlinks/.env
   sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=$db_password|" $deploy_directory/symlinks/.env
   sed -i "s|HORIZON_PREFIX=.*|HORIZON_PREFIX=$username|" $deploy_directory/symlinks/.env
 

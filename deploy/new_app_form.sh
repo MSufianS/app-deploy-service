@@ -46,6 +46,7 @@ sudo cp $my_path/_app.sh $my_path/../apps/$username.sh
 sudo sed -i "s|username=UNAME|username=$username|" $my_path/../apps/$username.sh
 sudo sed -i "s|password=PWORD|password=$password|" $my_path/../apps/$username.sh
 sudo sed -i "s|db_database=DB_DBASE|db_database=$db_database|" $my_path/../apps/$username.sh
+sudo sed -i "s|db_username=DB_UNAME|db_username=$db_username|" $my_path/../apps/$username.sh
 sudo sed -i "s|db_password=DB_PWORD|db_password=$db_password|" $my_path/../apps/$username.sh
 sudo sed -i "s|app_type=APP_TYPE|app_type=$app_type|" $my_path/../apps/$username.sh
 sudo sed -i "s|app_port=PORT|app_port=$application_port|" $my_path/../apps/$username.sh

@@ -96,7 +96,7 @@ then
   fi
 
   title "Dropping $app_name user and $app_name database from MySQL"
-  mysql -u root -p$db_root_password <<SQL
+  mysql -u root -p$db_password <<SQL
 DROP DATABASE IF EXISTS $app_name;
 DROP USER IF EXISTS '$username'@'localhost';
 FLUSH PRIVILEGES;
