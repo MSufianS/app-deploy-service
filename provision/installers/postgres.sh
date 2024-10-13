@@ -11,7 +11,8 @@ sudo -u postgres /usr/bin/createdb --echo --owner=homestead homestead
 sudo service postgresql restart
 sudo systemctl disable postgresql
 
-git clone https://github.com/pgvector/pgvector.git
+sudo git clone https://github.com/pgvector/pgvector.git
 cd pgvector
 sudo make
 sudo make install
+sudo rm -rf pgvector

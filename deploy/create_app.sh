@@ -157,6 +157,18 @@ else
 fi
 
 title "Creating Supervisor Conf"
+log_dir="$deploy_directory/current/storage/logs"
+# Ensure log directory exists and has the correct permissions
+if [ ! -d "$log_dir" ]; then
+    sudo mkdir -p "$log_dir"
+    sudo chown $username:$username "$log_dir"
+    sudo chmod 775 "$log_dir"
+    status "Log directory created: $log_dir"
+else
+    status "Log directory already exists: $log_dir"
+fi
+
+# Horizon service setup
 if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
     sudo cp $root_path/deploy/_supervisor.conf /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|program:|program:horizon_$username|" /etc/supervisor/conf.d/$username.conf
@@ -167,8 +179,10 @@ if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
     sudo supervisorctl update
     status "Created: /etc/supervisor/conf.d/$username.conf"
 else
-  status "Already exists: /etc/supervisor/conf.d/$username.conf"
+    status "Already exists: /etc/supervisor/conf.d/$username.conf"
 fi
+
+# Pulse service setup
 pulse_conf_file="/etc/supervisor/conf.d/${username}_pulse.conf"
 if [ ! -f "$pulse_conf_file" ]; then
     sudo cp $root_path/deploy/_supervisor.conf "$pulse_conf_file"
@@ -180,7 +194,7 @@ if [ ! -f "$pulse_conf_file" ]; then
     sudo supervisorctl update
     status "Created: $pulse_conf_file"
 else
-  status "Already exists: $pulse_conf_file"
+    status "Already exists: $pulse_conf_file"
 fi
 
 cd $initial_working_directory || exit
