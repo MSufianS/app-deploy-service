@@ -233,12 +233,10 @@ if [ "$has_queue" == "y" ]; then
   queue_conf_file="/etc/supervisor/conf.d/${username}_queue.conf"
   if [ ! -f "$queue_conf_file" ]; then
       sudo cp $root_path/deploy/_supervisor.conf "$queue_conf_file"
-      sudo sed -i "s|program:|program:queue_${username}_%(process_num)s|" "$queue_conf_file"
+      sudo sed -i "s|program:|program:queue_$username|" "$queue_conf_file"
       sudo sed -i "s|command=|command=php $deploy_directory/current/artisan queue:work --sleep=3 --tries=3 --max-time=3600|" "$queue_conf_file"
       sudo sed -i "s|user=|user=$username|" "$queue_conf_file"
       sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/queue.log|" "$queue_conf_file"
-      echo "numprocs=8" | sudo tee -a "$queue_conf_file" > /dev/null
-      echo "stopwaitsecs=3600" | sudo tee -a "$queue_conf_file" > /dev/null
       sudo supervisorctl reread
       sudo supervisorctl update
       status "Created: $queue_conf_file"
