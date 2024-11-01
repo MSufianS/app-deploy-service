@@ -35,6 +35,7 @@ read -p "Git repo url: " git_repo_url
 read -p "Laravel Reverb (y or n): " has_reverb
 read -p "Laravel Horizon (y or n): " has_horizon
 read -p "Laravel Pulse (y or n): " has_pulse
+read -p "Laravel Pulse (y or n): " has_queue
 
 app_type="laravel"
 
@@ -59,6 +60,7 @@ sudo sed -i "s|public_ssh_key=PUB_SSH_KEY|public_ssh_key=\"$public_ssh_key\"|" $
 sudo sed -i "s|has_reverb=HAS_REVERB|has_reverb=$has_reverb|" $my_path/../apps/$username.sh
 sudo sed -i "s|has_horizon=HAS_HORIZON|has_horizon=$has_horizon|" $my_path/../apps/$username.sh
 sudo sed -i "s|has_pulse=HAS_PULSE|has_pulse=$has_pulse|" $my_path/../apps/$username.sh
+sudo sed -i "s|has_queue=HAS_QUEUE|has_queue=$has_queue|" $my_path/../apps/$username.sh
 
 title "Status"
 if [ -f $my_path/../apps/$username.sh ]; then

@@ -15,3 +15,4 @@ public_ssh_key=PUB_SSH_KEY
 has_reverb=HAS_REVERB
 has_horizon=HAS_HORIZON
 has_pulse=HAS_PULSE
+has_queue=HAS_QUEUE

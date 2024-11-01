@@ -228,4 +228,28 @@ else
     status "Reverb is disabled in config.yml. Skipping Supervisor conf for Reverb."
 fi
 
+# Queue Worker service setup
+if [ "$has_queue" == "y" ]; then
+  queue_conf_file="/etc/supervisor/conf.d/${username}_queue.conf"
+  if [ ! -f "$queue_conf_file" ]; then
+      sudo cp $root_path/deploy/_supervisor.conf "$queue_conf_file"
+      sudo sed -i "s|program:|program:queue_$username|" "$queue_conf_file"
+      sudo sed -i "s|command=|command=php $deploy_directory/current/artisan queue:work --sleep=3 --tries=3 --max-time=3600|" "$queue_conf_file"
+      sudo sed -i "s|user=|user=$username|" "$queue_conf_file"
+      sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/queue.log|" "$queue_conf_file"
+      sudo sed -i "s|numprocs=|numprocs=8|" "$queue_conf_file"
+      sudo sed -i "s|autostart=|autostart=true|" "$queue_conf_file"
+      sudo sed -i "s|autorestart=|autorestart=true|" "$queue_conf_file"
+      sudo sed -i "s|stopasgroup=|stopasgroup=true|" "$queue_conf_file"
+      sudo sed -i "s|killasgroup=|killasgroup=true|" "$queue_conf_file"
+      sudo supervisorctl reread
+      sudo supervisorctl update
+      status "Created: $queue_conf_file"
+  else
+      status "Already exists: $queue_conf_file"
+  fi
+else
+    status "Queue Worker is disabled in config.yml. Skipping Supervisor conf for Queue."
+fi
+
 cd $initial_working_directory || exit
