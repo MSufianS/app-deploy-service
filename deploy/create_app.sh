@@ -237,8 +237,8 @@ if [ "$has_queue" == "y" ]; then
       sudo sed -i "s|command=|command=php $deploy_directory/current/artisan queue:work --sleep=3 --tries=3 --max-time=3600|" "$queue_conf_file"
       sudo sed -i "s|user=|user=$username|" "$queue_conf_file"
       sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/queue.log|" "$queue_conf_file"
-      sudo sed -i '/^numprocs=/d' "$queue_conf_file"  # Remove existing numprocs line if present
-      echo "numprocs=8" | sudo tee -a "$queue_conf_file" > /dev/null  # Add numprocs if needed
+      echo "numprocs=8" | sudo tee -a "$queue_conf_file" > /dev/null
+      echo "stopwaitsecs=3600" | sudo tee -a "$queue_conf_file" > /dev/null
       sudo supervisorctl reread
       sudo supervisorctl update
       status "Created: $queue_conf_file"
