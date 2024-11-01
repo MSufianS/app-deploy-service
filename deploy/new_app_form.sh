@@ -35,7 +35,7 @@ read -p "Git repo url: " git_repo_url
 read -p "Laravel Reverb (y or n): " has_reverb
 read -p "Laravel Horizon (y or n): " has_horizon
 read -p "Laravel Pulse (y or n): " has_pulse
-read -p "Laravel Pulse (y or n): " has_queue
+read -p "Laravel Queue (y or n): " has_queue
 
 app_type="laravel"
 

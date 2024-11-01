@@ -237,11 +237,6 @@ if [ "$has_queue" == "y" ]; then
       sudo sed -i "s|command=|command=php $deploy_directory/current/artisan queue:work --sleep=3 --tries=3 --max-time=3600|" "$queue_conf_file"
       sudo sed -i "s|user=|user=$username|" "$queue_conf_file"
       sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/queue.log|" "$queue_conf_file"
-      sudo sed -i "s|numprocs=|numprocs=8|" "$queue_conf_file"
-      sudo sed -i "s|autostart=|autostart=true|" "$queue_conf_file"
-      sudo sed -i "s|autorestart=|autorestart=true|" "$queue_conf_file"
-      sudo sed -i "s|stopasgroup=|stopasgroup=true|" "$queue_conf_file"
-      sudo sed -i "s|killasgroup=|killasgroup=true|" "$queue_conf_file"
       sudo supervisorctl reread
       sudo supervisorctl update
       status "Created: $queue_conf_file"
